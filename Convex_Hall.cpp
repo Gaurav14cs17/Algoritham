@@ -1,3 +1,12 @@
+/*
+
+Problem : http://codeforces.com/contest/988/problem/F
+Algoritham : https://cp-algorithms.com/geometry/convex_hull_trick.html
+
+*/
+
+
+
 #include"bits/stdc++.h"
 using namespace std;
 const int N = 2001;
