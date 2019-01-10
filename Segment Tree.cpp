@@ -1,7 +1,6 @@
 
 // https://codeforces.com/problemset/problem/272/C
 
-
 #include"bits/stdc++.h"
 using namespace std;
 
@@ -15,9 +14,9 @@ const int N = 1e6 + 6;
 class Segment_Tree{
 
 private:
-	std::vector<int>segment;
-	std::vector<int> arr;
-	std::vector<int> lazy;
+	std::vector<long long int>segment;
+	std::vector<long long int> arr;
+	std::vector<long long int> lazy;
 	int n;
 
 
@@ -25,7 +24,7 @@ private:
 
 		if(lazy[node]){
 			segment[node] = lazy[node];
-			if( l != r ){
+			if( l != r-1 ){
 				lazy[node+node] = lazy[node];
 				lazy[node+node +1] = lazy[node];
 			}
@@ -43,9 +42,6 @@ private:
 		build( node + node , l , mid );
 		build( node+node+1 , mid , r );
 
-
-		// Operation of segment Tree
-
 		segment[node]= max( segment[node+node] , segment[node+node+1]);
 	}
 
@@ -57,10 +53,8 @@ private:
 
 		if( ql <=l && r <= qr ) return segment[node];
 		int mid = ( l + r )>>1;
-		long long left_ans = range_query( node + node , l , mid , ql , qr );
-		long long right_ans = range_query( node + node +1 , mid , r , ql , qr);
-
-		// Operation of segment tree
+		long long int left_ans = range_query( node + node , l , mid , ql , qr );
+		long long int right_ans = range_query( node + node +1 , mid , r , ql , qr);
 
 		return max( left_ans , right_ans );
 
@@ -82,19 +76,15 @@ private:
 		point_update( node + node , l , mid , idx , val );
 		point_update( node + node +1 , mid  , r , idx , val );
 
-		// Operation of segment tree
-
 		segment[node] = max( segment[node + node ] , segment[node+node+1]);
 
 	}
 
 
-	void range_update( int node , int l , int r , int ql , int qr , int val ){
+	void range_update( int node , int l , int r , int ql , int qr , long long int val ){
 
 		push( node , l , r );
-
 		if( l>= qr ||  r <= ql ) return ;
-
 		if( ql <=l && r <= qr ){
 
 			segment[node] = val;
@@ -109,8 +99,6 @@ private:
 		range_update( node + node , l , mid , ql , qr , val );
 		range_update( node + node +1 , mid , r , ql , qr , val );
 
-		// operation of segment tree
-
 		segment[node] = max( segment[node+node] , segment[node+node+1]);
 
 	}
@@ -124,24 +112,23 @@ public:
 		n = 0;
 	}
 
-	// construct using a vector
-	Segment_Tree( std::vector<int>& baseArray ){
+	Segment_Tree( std::vector<long long int>& baseArray ){
 
 		arr = baseArray;
 		n  = (int)(arr.size());
-		segment = std::vector<int>(4*n , 0 );
-		lazy = std::vector<int>(4*n , 0 );
+		segment = std::vector<long long int>(4*n , 0 );
+		lazy = std::vector<long long int>(4*n , 0 );
 		build( 1 , 0 , n );
 	}
 
 
-	// construct using an array
+	
 	Segment_Tree( int *begin , int *end ){
 
-		arr = std::vector<int>( begin , end );
+		arr = std::vector<long long int>( begin , end );
 		n  = (int)(arr.size());
-		segment = std::vector<int> (4*n , 0 );
-		lazy = std::vector<int> (4*n , 0 );
+		segment = std::vector<long long int> (4*n , 0 );
+		lazy = std::vector< long long int> (4*n , 0 );
 		build( 1 , 0 , n );
 	}
 
@@ -153,7 +140,7 @@ public:
 		point_update( 1 , 0 , n , idx , val );
 	}
 
-	void range_update( int l , int r , int val ){
+	void range_update( int l , int r ,long long  int val ){
 		range_update( 1 , 0 , n , l ,  r , val );
 	}
 
@@ -167,8 +154,8 @@ int main(){
     int n ;
     scanf("%d",&n);
 
-    std::vector<int> v(n);
-    for( int i = 0 ; i<n ; ++i ) scanf("%d",&v[i]);
+    std::vector<long long int> v(n);
+    for( int i = 0 ; i<n ; ++i ) scanf("%lld",&v[i]);
 
 	Segment_Tree S(v);
 	int q;
