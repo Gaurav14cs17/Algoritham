@@ -37,7 +37,7 @@ private:
 		}
 		int mid = ( l + r )>>1;
 		build( node + node , l , mid );
-		build( node+node+1 , mid +1 , r );
+		build( node+node+1 , mid , r );
 
 
 		// Operation of segment Tree
@@ -54,7 +54,7 @@ private:
 		if( ql <=l && r <= qr ) return segment[node];
 		int mid = ( l + r )>>1;
 		long long left_ans = range_query( node + node , l , mid , ql , qr );
-		long long right_ans = range_query( node + node +1 , mid +1 , r , ql , qr);
+		long long right_ans = range_query( node + node +1 , mid , r , ql , qr);
 
 		// Operation of segment tree
 
@@ -76,7 +76,7 @@ private:
 		int mid = ( l + r )>>1;
 
 		point_update( node + node , l , mid , idx , val );
-		point_update( node + node +1 , mid +1 , r , idx , val );
+		point_update( node + node +1 , mid  , r , idx , val );
 
 		// Operation of segment tree
 
@@ -103,7 +103,7 @@ private:
 
 		int mid = (  l + r )>>1;
 		range_update( node + node , l , mid , ql , qr , val );
-		range_update( node + node +1 , mid +1 , r , ql , qr , val );
+		range_update( node + node +1 , mid , r , ql , qr , val );
 
 		// operation of segment tree
 
@@ -121,7 +121,7 @@ public:
 	}
 
 	// construct using a vector
-	Segment_Tree( std::vector<int> &baseArray ){
+	Segment_Tree( std::vector<int>& baseArray ){
 
 		arr = baseArray;
 		n  = (int)(arr.size());
@@ -160,4 +160,23 @@ public:
 
 int main(){
     
+    int n ;
+    scanf("%d",&n);
+
+    std::vector<int> v(n);
+    for( int i = 0 ; i<n ; ++i ) scanf("%d",&v[i]);
+
+	Segment_Tree S(v);
+	int q;
+	scanf("%d",&q);
+
+	while(q--){
+		int w , h ;
+		scanf("%d%d",&w,&h);
+
+		long long ans = S.query( 0 , w );
+		S.range_update( 0 , w , ans + h );
+
+		printf("%lld\n",ans);
+	}
 }
