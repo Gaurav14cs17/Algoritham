@@ -1,3 +1,7 @@
+
+// https://codeforces.com/problemset/problem/272/C
+
+
 #include"bits/stdc++.h"
 using namespace std;
 
